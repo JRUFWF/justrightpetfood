@@ -1,0 +1,18 @@
+#!/bin/bash
+FILE=db/magento.sql
+
+while true; do
+    read -p "Do you wish to seed the magentodb database? [yN]" yn
+    case $yn in
+        [Yy]* ) 
+          if [ -f "$FILE" ]; then
+            bin/clinotty mysql -hdatabase -umagento -pmagento magentodb < $FILE
+          else
+            echo "$FILE is required";
+          fi
+          break;;
+        [Nn]* ) exit;;
+        * ) exit;;
+    esac
+done
+# bin/clinotty mysql -hdatabase -umagento -pmagento magentodb < db/master-data.sql
