@@ -18,27 +18,8 @@ recommended resource settings:
 
 ## Setup Steps
 1. Clone this project to your desired location
-2. Inside the project, clone the Just Right platform to the `src/` folder.
-
+2. Get the provided magento sql dump file (ask any of the devs) and save it in `db/` as `magento.sql`
+3. run
     ```sh
-    git clone ssh://git@52.166.71.39:7999/npujr/purina-us-justright-platform.git src
+    ./setup.sh
     ```
-3. Navigate into `src/` and checkout the desired branch for the platform code.
-4. Create the `src/app/code` and `src/app/design` folders if they do not exist.
-5. Copy the nginx.conf.sample file to the `src/` directory.
-
-    ```sh
-    cp config/nginx.conf.sample src/
-    ```
-6. Copy over the env.php to `src/`
-
-    ```sh
-    cp config/env.php.sample src/app/etc/env.php
-    ```
-7. `bin/start` to start up the containers
-8. Get the provided magento sql dump file (ask any of the devs) and save it in `db/` as `magento.sql`
-9. `bin/seed-magento-db`
-10. `bin/copytocontainer --all`
-11. `bin/composer build-and-test`
-12. `bin/sync-master-data`
-13. `bin/setup-domain justrightpetfood.local`
