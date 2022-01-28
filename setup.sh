@@ -281,6 +281,10 @@ mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='
 mysql -uroot -proot -hdatabase magentodb -e "delete from core_config_data where path like '%admin/url/%'"
 bin/magento setup:upgrade
 
+echo "******** create an admin account ********* "
+bin/cli php bin/magento admin:user:create --admin-user=dommy --admin-password=test1234 --admin-email=test@test.com --admin-firstname=test --admin-lastname=1234
+
+
 echo "******** restart to enable react project in docker container ********"
 bin/restart
 
