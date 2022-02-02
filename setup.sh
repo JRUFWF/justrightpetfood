@@ -216,6 +216,8 @@ echo "********* Initial copy will take a few minutes... ********* "
 bin/copytocontainer --all
 
 echo "********* build and test *********"
+bin/composer install
+bin/cli chmod 777 -R *
 bin/composer build-and-test
 
 echo "********* check if vendor_path exit *********"
@@ -238,7 +240,7 @@ echo "********* sync magento master data, est 5 mins  ********* "
 bin/sync-master-data
 
 echo "******** sync master data done ********* "
-bin/magento app:config:import
+bin/magento se:up
 
 echo "******** update sql to forbid 404 redirect ********* "
 mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='https://justrightpetfood.local/' where path like '%/base_url';"
