@@ -15,6 +15,7 @@ recommended resource settings:
 - CPUs: 4
 - Memory: 8.00 GB
 - Swap: 1 GB
+- if you are using mac, do not forget to turn allow apps to download from "any"
 
 ## Setup Steps
 1. Clone this project to your desired location
