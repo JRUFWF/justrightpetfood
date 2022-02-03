@@ -24,3 +24,6 @@ recommended resource settings:
     ```sh
     ./setup.sh
     ```
+## Setup Launch Darkly
+go to https://app.launchdarkly.com/settings/projects and find the keys for dev, put them to
+go to https://justrightpetfood.local/admin stores -> setting/configuration -> purina global -> Launch Darkly -> general
