@@ -216,7 +216,6 @@ echo "********* Initial copy will take a few minutes... ********* "
 bin/copytocontainer --all
 
 echo "********* build and test *********"
-bin/composer install
 bin/cli chmod 777 -R *
 bin/composer build-and-test
 

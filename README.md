@@ -15,6 +15,7 @@ recommended resource settings:
 - CPUs: 4
 - Memory: 8.00 GB
 - Swap: 1 GB
+- if you are using mac, do not forget to turn allow apps to download from "any"
 
 ## Setup Steps
 1. Clone this project to your desired location
@@ -23,3 +24,6 @@ recommended resource settings:
     ```sh
     ./setup.sh
     ```
+## Setup Launch Darkly
+go to https://app.launchdarkly.com/settings/projects and find the keys for dev, put them to
+go to https://justrightpetfood.local/admin stores -> setting/configuration -> purina global -> Launch Darkly -> general
