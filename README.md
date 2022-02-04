@@ -27,3 +27,8 @@ recommended resource settings:
 ## Setup Launch Darkly
 go to https://app.launchdarkly.com/settings/projects and find the keys for dev, put them to
 go to https://justrightpetfood.local/admin stores -> setting/configuration -> purina global -> Launch Darkly -> general
+
+After magento update masterdata or switch to new branch and error detected, run
+```sh
+./magento-update.sh
+```
