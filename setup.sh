@@ -252,6 +252,10 @@ bin/cli php bin/magento admin:user:create --admin-user=dommy --admin-password=te
 echo ">>>> set up local domain to justrightpetfood.local <<<<"
 bin/setup-domain justrightpetfood.local
 
+
+echo ">>>> turn on the xDebug for php <<<<"
+bin/xdebug enable
+
 read -p "do you want to open local test site [Yn] " -r
 if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
   open https://justrightpetfood.local
