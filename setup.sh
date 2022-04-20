@@ -250,8 +250,8 @@ echo "******** copy generated and vendor folder from container to local ********
 bin/copyfromcontainer generated
 bin/copyfromcontainer vendor
 
-echo "******** create dommy admin account ********* "
-bin/cli php bin/magento admin:user:create --admin-user=dommy --admin-password=test1234 --admin-email=test@test.com --admin-firstname=test --admin-lastname=1234
+echo "******** create admin account ********* "
+bin/cli php bin/magento admin:user:create
 
 echo ">>>> set up local domain to justrightpetfood.local <<<<"
 bin/setup-domain justrightpetfood.local
