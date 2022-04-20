@@ -234,7 +234,7 @@ echo "********* check if vendor_path exit *********"
   done
 
 
-################ 5: sync master data, vendor and set test admin account
+################ 5: sync master data, copy generated and vendor folder, and set test admin account
 echo "********* sync magento master data, est 5 mins  ********* "
 bin/sync-master-data
 
@@ -246,8 +246,9 @@ mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='
 mysql -uroot -proot -hdatabase magentodb -e "delete from core_config_data where path like '%admin/url/%'"
 bin/magento setup:upgrade
 
-echo "******** copy vendor folder to local ********* "
+echo "******** copy generated and vendor folder from container to local ********* "
 bin/copyfromcontainer generated
+bin/copyfromcontainer vendor
 
 echo "******** create dommy admin account ********* "
 bin/cli php bin/magento admin:user:create --admin-user=dommy --admin-password=test1234 --admin-email=test@test.com --admin-firstname=test --admin-lastname=1234
