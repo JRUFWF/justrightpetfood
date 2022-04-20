@@ -234,7 +234,7 @@ echo "********* check if vendor_path exit *********"
   done
 
 
-################ 5: sync master data and set test admin account
+################ 5: sync master data, vendor and set test admin account
 echo "********* sync magento master data, est 5 mins  ********* "
 bin/sync-master-data
 
@@ -245,6 +245,9 @@ echo "******** update sql to forbid 404 redirect ********* "
 mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='https://justrightpetfood.local/' where path like '%/base_url';"
 mysql -uroot -proot -hdatabase magentodb -e "delete from core_config_data where path like '%admin/url/%'"
 bin/magento setup:upgrade
+
+echo "******** copy vendor folder to local ********* "
+bin/copyfromcontainer generated
 
 echo "******** create dommy admin account ********* "
 bin/cli php bin/magento admin:user:create --admin-user=dommy --admin-password=test1234 --admin-email=test@test.com --admin-firstname=test --admin-lastname=1234
