@@ -1,1 +1,14 @@
-bin/magento ind:rei && bin/magento ca:fl && bin/redis redis-cli flushall
+#!/bin/bash
+
+################ 1: reindex
+echo "********* 1/3 reindex ********* "
+bin/magento ind:rei
+
+
+################ 2: flush cache
+echo "********* 2/3 flush cache ********* "
+bin/magento ca:fl 
+
+################ 3: clear redis cache
+echo "********* 3/3 clear redis cache ********* "
+bin/redis redis-cli flushall
