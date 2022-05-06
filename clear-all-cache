@@ -1,0 +1,1 @@
+bin/magento ind:rei && bin/magento ca:fl && bin/redis redis-cli flushall
