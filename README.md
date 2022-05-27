@@ -19,7 +19,7 @@ recommended resource settings:
 
 ## Setup Steps
 1. Clone this project to your desired location
-2. Get the provided magento sql dump file (ask any of the devs) and save it in `db/` as `magento.sql`
+2. Get the provided magento sql dump file (ask any of the devs) and save it in `db/` as `magento.sql` (if permission denied, use sed 's/\sDEFINER=`[^`]*`@`[^`]*`//'  -i magento.sql to remove the definer)
 3. run
     ```sh
     ./setup.sh
