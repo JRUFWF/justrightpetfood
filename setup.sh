@@ -211,54 +211,69 @@ if [ -f "$FILE" ]; then
 else
   echo "$FILE is required"
 fi
+#
+#echo "********* Initial copy will take a few minutes... ********* "
+#bin/copytocontainer --all
+#
+#echo "********* build and test *********"
+#bin/cli chmod 777 -R *
+#bin/composer build-and-test
+#
+#echo "********* check if vendor_path exit *********"
+#[ -f 'src/app/etc/vendor_path.php' ] ||
+#  while true; do
+#    if [[ -f 'src/app/etc/vendor_path.php' || -d "src/app/code/Ves" ]]; then
+#      echo "exit, ok"
+#      break;
+#    else
+#      bin/start-no-sync
+#      bin/restart
+#      bin/delete-vendor-folder
+#      bin/composer build-and-test
+#    fi
+#  done
+#
+#read -p "Do you wish to remove generated files and composer build again? [Yn] " -r
+#  if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
+#      bin/clear-generated-stuff
+#  fi
+#
+################# 5: sync master data, copy generated and vendor folder, and set test admin account
+#echo "********* sync magento master data, est 5 mins  ********* "
+#bin/sync-master-data
+#
+#echo "******** sync master data done ********* "
+#bin/magento se:up
 
-echo "********* Initial copy will take a few minutes... ********* "
+################# 5: refresh, and set test admin account
+rm -rf ../src/vendor ../src/generated &
+bin/restart-no-sync
 bin/copytocontainer --all
-
-echo "********* build and test *********"
-bin/cli chmod 777 -R *
-bin/composer build-and-test
-
-echo "********* check if vendor_path exit *********"
-[ -f 'src/app/etc/vendor_path.php' ] ||
-  while true; do
-    if [[ -f 'src/app/etc/vendor_path.php' || -d "src/app/code/Ves" ]]; then
-      echo "exit, ok"
-      break;
-    else
-      bin/start-no-sync
-      bin/restart
-      bin/delete-vendor-folder
-      bin/composer build-and-test
-    fi
-  done
-
-
-################ 5: sync master data, copy generated and vendor folder, and set test admin account
-echo "********* sync magento master data, est 5 mins  ********* "
+bin/restart
 bin/sync-master-data
-
-echo "******** sync master data done ********* "
-bin/magento se:up
-
-echo "******** update sql to forbid 404 redirect ********* "
-mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='https://justrightpetfood.local/' where path like '%/base_url';"
-mysql -uroot -proot -hdatabase magentodb -e "delete from core_config_data where path like '%admin/url/%'"
-bin/magento setup:upgrade
-
-echo "******** copy generated and vendor folder from container to local ********* "
+bin/composer build-and-test
+bin/copyfromcontainer vendor &
 bin/copyfromcontainer generated
-bin/copyfromcontainer vendor
 
-echo "******** create admin account ********* "
-bin/cli php bin/magento admin:user:create
+read -p "Do you wish to remove generated files and composer build again? [Yn] " -r
+  if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
+      bin/clear-generated-stuff
+  fi
 
-echo ">>>> set up local domain to justrightpetfood.local <<<<"
-bin/setup-domain justrightpetfood.local
-
-
-echo ">>>> turn on the xDebug for php <<<<"
-bin/xdebug enable
+#echo "******** update sql to forbid 404 redirect ********* "
+#bin/clinotty mysql -uroot -proot -hdatabase magentodb -e "update core_config_data set value='https://justrightpetfood.local/' where path like '%/base_url';"
+#bin/clinotty mysql -uroot -proot -hdatabase magentodb -e "delete from core_config_data where path like '%admin/url/%'"
+#bin/magento setup:upgrade
+#
+#echo "******** create admin account ********* "
+#bin/cli php bin/magento admin:user:create
+#
+#echo ">>>> set up local domain to justrightpetfood.local <<<<"
+#bin/setup-domain justrightpetfood.local
+#
+#
+#echo ">>>> turn on the xDebug for php <<<<"
+#bin/xdebug enable
 
 read -p "do you want to open local test site [Yn] " -r
 if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then

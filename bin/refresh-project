@@ -1,0 +1,9 @@
+#!/bin/bash
+rm -rf ../src/vendor ../src/generated &
+bin/restart-no-sync 
+bin/copytocontainer --all
+bin/restart
+bin/sync-master-data
+bin/composer build-and-test
+bin/copyfromcontainer vendor &
+bin/copyfromcontainer generated &

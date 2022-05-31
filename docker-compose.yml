@@ -1,7 +1,7 @@
 ## Mark Shust's Docker Configuration for Magento
 ## (https://github.com/markshust/docker-magento)
 ##
-## Version 41.0.2
+## Version 42.0.0
 
 ## To use SSH, see https://github.com/markshust/docker-magento#ssh
 ## Linux users, see https://github.com/markshust/docker-magento#linux
@@ -14,7 +14,7 @@ version: "3"
 
 services:
   app:
-    image: markoshust/magento-nginx:1.18-5
+    image: markoshust/magento-nginx:1.18-7
     ports:
       - "80:8000"
       - "443:443"
@@ -26,7 +26,6 @@ services:
       - sockdata:/sock
       - ssldata:/etc/nginx/certs
     extra_hosts: &appextrahosts
-      - "host.docker.internal:172.17.0.1"
       ## M1 Mac support to fix Docker delay, see #566
       - "app:172.17.0.1"
       - "phpfpm:172.17.0.1"
@@ -38,7 +37,7 @@ services:
       - "magento.test:172.17.0.1"
 
   phpfpm:
-    image: markoshust/magento-php:7.4-fpm-12
+    image: markoshust/magento-php:7.4-fpm-13
     volumes: *appvolumes
     extra_hosts: *appextrahosts
     env_file: env/phpfpm.env
@@ -54,13 +53,13 @@ services:
     extra_hosts: *appextrahosts
 
   redis-cache:
-    image: redis:5.0-alpine
+    image: redis:6.0-alpine
     ports:
       - "6379:6379"
     extra_hosts: *appextrahosts
 
   elasticsearch:
-    image: markoshust/magento-elasticsearch:7.9.3-1
+    image: markoshust/magento-elasticsearch:7.16-0
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -75,14 +74,13 @@ services:
     extra_hosts: *appextrahosts
 
   rabbitmq:
-    image: rabbitmq:3.8.22-management-alpine
+    image: markoshust/magento-rabbitmq:3.9-0
     ports:
       - "15672:15672"
       - "5672:5672"
     volumes:
       - rabbitmqdata:/var/lib/rabbitmq
-    environment:
-      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=1GB
+    env_file: env/rabbitmq.env
     extra_hosts: *appextrahosts
 
   mailcatcher:
@@ -90,6 +88,13 @@ services:
     ports:
       - "1080:1080"
     extra_hosts: *appextrahosts
+
+  ## Blackfire support, uncomment to enable
+  #blackfire:
+  #  image: blackfire/blackfire:2
+  #  ports:
+  #    - "8307"
+  #  env_file: env/blackfire.env
 
   ## Selenium support, uncomment to enable
   #selenium:
