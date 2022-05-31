@@ -1,6 +1,9 @@
 #!/bin/bash
 
 ################ 1: Restart no sync
+echo ""******** rm generated folder ********* "
+bin/delete-vendor-folder
+
 echo "********* 1/5 Restart no sync ********* "
 bin/stop "$@"
 bin/start-no-sync "$@"
@@ -21,5 +24,9 @@ bin/sync-master-data
 echo "******** 5/5 Composer install and build ********* "
 bin/composer build-and-test
 
+
+echo "******** copy vendor and generate folder to local ********"
+bin/copyfromcontainer vendor
+bin/copyfromcontainer generated
 
 

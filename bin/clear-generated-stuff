@@ -1,3 +1,6 @@
 #!/bin/bash
-bin/cli rm -rf /vendor /generated
+echo "******** remove generated stuff ********* "
+bin/cli rm -rf vendor/ generated/
 bin/cli rm app/etc/NonComposerComponentRegistration.php app/etc/db_schema.xml app/etc/di.xml app/etc/registration_globlist.php app/etc/vendor_path.php
+echo "******** re generate generated stuff ********* "
+bin/cli composer install
