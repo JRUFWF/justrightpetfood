@@ -67,3 +67,7 @@ or
 ```
 bin/magento setup:di:compile && bin/magento ca:fl
 ```
+
+hint1: if something went wrong bash into box, rm vendor generates and then composer install, then go inside vendor composer install, then should looks right
+
+hint2: if mac chrome have no process anyway for the unsafe local domain, click the browser then type "thisisunsafe"; https://stackoverflow.com/questions/58802767/no-proceed-anyway-option-on-neterr-cert-invalid-in-chrome-on-macos 
